@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villager Launcher</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* 💡 已经为你精准修正为你的真实图片全名：villagelaucher.jpeg */
+            background: url('./villagelaucher.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #e2e3dc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: inherit;
+        }
+        .launcher-card {
+            background-color: rgba(35, 42, 34, 0.85); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 35px 30px;
+            border-radius: 16px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            width: 380px;
+            border: 2px solid rgba(166, 227, 161, 0.3);
+        }
+        h1 {
+            color: #a6e3a1; 
+            margin: 0 0 5px 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .subtitle {
+            color: #cbd5cb;
+            font-size: 13px;
+            margin-bottom: 30px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .form-group {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #a6e3a1;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #384b36;
+            background-color: rgba(17, 20, 16, 0.9);
+            color: #e2e3dc;
+            font-size: 15px;
+            outline: none;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        select:focus {
+            border-color: #a6e3a1;
+        }
+        button.launch-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4ca64c; 
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+        button.launch-btn:hover {
+            background-color: #5cb85c;
+            box-shadow: 0 8px 20px rgba(76,166,76,0.4);
+        }
+        button.launch-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+<div class="launcher-card">
+    <h1>Villager Launcher</h1>
+    <div class="subtitle" id="ui-subtitle">Hrmmm...</div>
+    
+    <div class="form-group">
+        <label for="version-select" id="ui-label">---</label>
+        <select id="version-select">
+            <option value="games/eaglercraft26.html">Eaglercraft 26.2</option>
+            <option value="games/EaglercraftX_1.20.6_WASM-GC_Offline_Download.html">Eaglercraft 1.20.6</option>
+        </select>
+    </div>
+
+    <button class="launch-btn" id="ui-btn" onclick="startEaglercraft()">---</button>
+</div>
+
+<script>
+    // 自动多语言
+    const LANG_TEXT = {
+        zh: {
+            subtitle: "Hrmmm... 欢迎使用村民启动器 🌾",
+            label: "选择你要启动的游戏版本：",
+            btn: "立即启动游戏窗口"
+        },
+        en: {
+            subtitle: "Hrmmm... Welcome to Villager Launcher 🌾",
+            label: "Select a version to launch:",
+            btn: "Launch Game Window"
+        }
+    };
+
+    const systemLang = navigator.language || navigator.userLanguage;
+    const currentLang = systemLang.startsWith('zh') ? 'zh' : 'en';
+
+    function initLauncher() {
+        document.getElementById('ui-subtitle').innerText = LANG_TEXT[currentLang].subtitle;
+        document.getElementById('ui-label').innerText = LANG_TEXT[currentLang].label;
+        document.getElementById('ui-btn').innerText = LANG_TEXT[currentLang].btn;
+    }
+
+    function startEaglercraft() {
+        const selectEl = document.getElementById('version-select');
+        const gamePath = selectEl.value;
+        
+        if (!gamePath) return;
+
+        const width = 1100;
+        const height = 800;
+        const left = (screen.width - width) / 2;
+        const top = (screen.height - height) / 2;
+        const windowFeatures = `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=no,status=no,toolbar=no,menuBar=no`;
+        
+        window.open(gamePath, '_blank', windowFeatures);
+    }
+
+    window.onload = initLauncher;
+</script>
+
+</body>
+</html>
